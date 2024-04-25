@@ -10,5 +10,5 @@ djangorestframework
 django
 django-cors-headers
 whitenoise==5.0
-sshtunnel
 python-dotenv
+psycopg 
