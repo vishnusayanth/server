@@ -1,0 +1,14 @@
+social-auth-app-django
+gunicorn
+requests
+bs4
+pandas
+xlrd
+openpyxl
+html5lib
+djangorestframework
+django
+django-cors-headers
+whitenoise==5.0
+sshtunnel
+python-dotenv

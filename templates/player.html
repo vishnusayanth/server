@@ -1,0 +1,32 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block content %}
+    <section id="hero">
+        <br/>
+        <div class="container" align="center" style="height: 800px;">
+
+            <center>
+                <form action="{% url 'search' %}" method="post" style="width: 60%;">
+                    {% csrf_token %}
+                    <div class="row shadow p-3 mb-5 bg-white rounded justify-content-around">
+                        <input type="text" placeholder="Search for music" class="form-control col-md-5"
+                               name="search_text"/>
+                        <select name="search_type" class="form-control col-md-5">
+                            <option value="artist">Artist</option>
+                            <option value="track">Track</option>
+                        </select>
+                        <button type="submit" class="btn btn-outline-dark btn-xs">
+                            Search
+                        </button>
+                    </div>
+                </form>
+            <br/>
+                <iframe src="{{ url }}" style="width: 80%;height: 100%;" border="0" frameborder="0" allowfullscreen
+                        allow="encrypted-media"></iframe>
+            </center>
+        </div>
+        <div height="300">
+
+        </div>
+    </section>
+{% endblock %}

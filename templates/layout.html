@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title>{{ title }} | Django App</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+
+    <!-- Favicons -->
+    <link href="static/assets/img/favicon.ico" rel="icon">
+    <link href="static/assets/img/favicon.ico" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Roboto:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+          rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/icofont/icofont.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/owl.carousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/venobox/venobox.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/aos/aos.css' %}" rel="stylesheet">
+
+    <!-- Template Main CSS File -->
+    <link href="{% static 'assets/css/style.css' %}" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <!-- =======================================================
+    * Template Name: Techie - v2.2.0
+    * Template URL: https://bootstrapmade.com/techie-free-skin-bootstrap-3/
+    * Author: BootstrapMade.com
+    * License: https://bootstrapmade.com/license/
+    ======================================================== -->
+</head>
+
+<body>
+
+<!-- ======= Header ======= -->
+<header id="header" class="fixed-top header-inner-pages">
+    <div class="container-fluid">
+
+        <div class="row justify-content-center">
+            <div class="col-xl-9 d-flex align-items-center">
+                <h1 class="logo mr-auto"><a href="{% url 'home' %}">Django App</a></h1>
+                <nav class="nav-menu d-none d-lg-block">
+                    <ul>
+                        <li><a href="{% url 'home' %}">Home</a></li>
+                        <li><a href="{% url 'categories' %}">Spotify</a></li>
+                        <li><a href="{% url 'news' %}">Headlines</a></li>
+                        <li><a href="{% url 'zomato' %}">Zomato</a></li>
+                        <li class="drop-down"><a href="">Planets</a>
+                            <ul>
+                                <li><a href="#">Mercury</a></li>
+                                <li><a href="#">Venus</a></li>
+                                <li class="drop-down"><a href="#">Earth</a>
+                                    <ul>
+                                        {% for item in continents %}
+                                            <li><a href="{% url 'countries_in_continent' item %}">{{ item }}</a></li>
+                                        {% endfor %}
+                                    </ul>
+                                </li>
+                                <li><a href="#">Mars</a></li>
+                                <li><a href="#">Jupiter</a></li>
+                                <li><a href="#">Saturn</a></li>
+                                <li><a href="#">Uranus</a></li>
+                                <li><a href="#">Neptune</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="drop-down">
+
+                            <a href="#">
+                                <i class="bx-user bx"></i>
+                            </a>
+                            <ul>
+                                <li><a target="_blank"
+                                       href="https://www.github.com/vishnusayanth/django-app">Source
+                                    code</a></li>
+                                {% if not user.is_authenticated %}
+                                    <li><a href="{% url 'login' %}">Login</a></li>
+                                    <li><a href="{% url 'home' %}#register">Sign up</a></li>
+                                {% else %}
+                                    <li><a href="{% url 'resetpassword' %}">Reset password</a>
+                                    </li>
+                                    <li><a href="#" id="token">Get Token (use pc)</a></li>
+
+                                    <li>
+                                        <hr/>
+                                    </li>
+                                    <li><a href="#">{{ user.username }}</a>
+                                        <input type="hidden" value="{{ user.is_authenticated }}" id="auth"></li>
+                                    {% if user.is_superuser %}
+                                        <li><a href="{% url 'admin:index' %}">Console</a></li>
+                                        <li><a href="{% url 'import' %}">Import data</a></li>
+                                    {% endif %}
+
+                                    <li><a href="{% url 'logoff' %}">Logout</a></li>
+                                {% endif %}
+                            </ul>
+                        </li>
+                    </ul>
+                </nav>
+                <a href="{% url 'docs' %}" class="get-started-btn scrollto">Documentation</a>
+            </div>
+        </div>
+
+    </div>
+</header><!-- End Header -->
+
+<main id="main">
+
+    {% block content %}
+    {% endblock %}
+</main><!-- End #main -->
+
+<!-- ======= Footer ======= -->
+<footer id="footer">
+
+    <div class="footer-top">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 footer-contact" id="register">
+                    {% if not user.is_authenticated %}
+                        <h5>Sign up to use our API</h5>
+                        <form action="{% url 'register' %}" method="post">
+                            {% csrf_token %}
+                            {{ registrationform.as_p }}
+                            <br/>
+                            <div class="justify-content-lg-around pt-3 pt-md-0">
+                                <button class="btn btn-outline-light" type="submit">Sign up!</button>
+                                &nbsp;&nbsp;OR&nbsp;&nbsp;&nbsp;
+                                <a href="{% url 'social:begin' 'github' %}" class="btn btn-outline-light">
+                                    <i class="bx bxl-github" style="color: black;"></i>
+                                    Signup with GitHub
+                                </a>
+                            </div>
+                            </div>
+                        </form>
+                    {% endif %}
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="copyright-wrap d-md-flex py-4">
+            <div class="mr-md-auto text-center text-md-left">
+                <div class="copyright">
+                    &copy; Developed in <b>2019</b> by <strong><span>Vishnu Sayanth</span></strong>. All Rights Reserved
+                </div>
+                <div class="credits">
+                    <!-- All the links in the footer should remain intact. -->
+                    <!-- You can delete the links only if you purchased the pro version. -->
+                    <!-- Licensing information: https://bootstrapmade.com/license/ -->
+                    <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/techie-free-skin-bootstrap-3/ -->
+                    Template source <a href="https://bootstrapmade.com/">BootstrapMade</a>
+                </div>
+            </div>
+            <div class="social-links text-center text-md-right pt-3 pt-md-0">
+                <a target="_blank" href="https://www.github.com/vishnusayanth" title="Developer's github profile"
+                   class="github"><i
+                        class="bx bxl-github"></i></a>
+                <a target="_blank" href="https://vishnusayanth.com/" title="Developer's portfolio"
+                   class="github"><i
+                        class="bx bxl-firefox"></i></a>
+                <a target="_blank" href="https://www.github.com/vishnusayanth/django-app" title="Source code"
+                   class="instagram"><i
+                        class="bx bxl-git"></i></a>
+                <a target="_blank" href="https://www.hackerrank.com/vishnusayanth"
+                   title="Developer's hackerrank profile" class="github"><strong>H</strong></a>
+                <a target="_blank" href="https://www.linkedin.com/in/vishnusayanth"
+                   title="Developer's linkedin profile" class="linkedin"><i
+                        class="bx bxl-linkedin"></i></a>
+            </div>
+        </div>
+    </div>
+</footer>
+{% if message %}
+    <input type="hidden" id="message" value="{{ message }}">
+{% elif request.session.message %}
+    <input type="hidden" id="message" value="{{ request.session.message }}">
+{% endif %}
+
+<a href="#" class="back-to-top"><i class="icofont-simple-up"></i></a>
+<div id="preloader"></div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="{% static 'assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'assets/vendor/jquery.easing/jquery.easing.min.js' %}"></script>
+<script src="{% static 'assets/vendor/php-email-form/validate.js' %}"></script>
+<script src="{% static 'assets/vendor/waypoints/jquery.waypoints.min.js' %}"></script>
+<script src="{% static 'assets/vendor/counterup/counterup.min.js' %}"></script>
+<script src="{% static 'assets/vendor/owl.carousel/owl.carousel.min.js' %}"></script>
+<script src="{% static 'assets/vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
+<script src="{% static 'assets/vendor/venobox/venobox.min.js' %}"></script>
+<script src="{% static 'assets/vendor/aos/aos.js' %}"></script>
+
+<script src="{% static 'assets/js/main.js' %}"></script>
+<script>
+    $(document).ready(function () {
+        $('[title]').tooltip();
+        $('.popover-btn').popover('hide')
+        $('.popover-btn').hover(function (){
+            $(this).popover('toggle')
+        })
+        if ($('#message').val()) {
+            alert($('#message').val());
+        }
+
+        // Below search function is common for states and countries.
+        // To be used for new pages in future by adding right classes to elements.
+        $('#search_text').keyup(function () {
+            let search_text = $(this).val();
+            $('tr.item').each(function () {
+                if (!$(this).text().toLowerCase().includes(search_text)) {
+                    $(this).hide();
+                } else {
+                    $(this).show();
+                }
+            });
+        });
+        $('#token').click(function () {
+            if ($('#auth').val() === 'True') {
+                $.ajax({
+                    type: "GET",
+                    url: "{% url 'token' %}",
+                    dataType: "json",
+                    success: function (data) {
+                        let s = `
+    Please check the API documentation for more information.
+    Copy the below token: `;
+                        prompt(s, data.token);
+                    },
+                    error: function () {
+                        alert('Oops! Something went wrong.');
+                    }
+                });
+            } else {
+                alert('Please login to generate token.');
+            }
+        });
+    });
+</script>
+</body>
+
+</html>

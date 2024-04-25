@@ -1,0 +1,40 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block content %}
+    <section class="features" style="background-color: lightgreen;">
+        <center>
+            <div class="container">
+                <center>
+                    <form action="{% url 'search' %}" method="post" style="width: 60%;">
+                        {% csrf_token %}
+                        <div class="row shadow p-3 mb-5 bg-white rounded justify-content-around">
+                            <input type="text" placeholder="Search for music" class="form-control col-md-5"
+                                   name="search_text"/>
+                            <select name="search_type" class="form-control col-md-5">
+                                <option value="artist">Artist</option>
+                                <option value="track">Track</option>
+                            </select>
+                            <button type="submit" class="btn btn-outline-dark btn-xs">
+                                Search
+                            </button>
+                        </div>
+                    </form>
+                </center>
+                <div class="container">
+                    <div class="row justify-content-around">
+                        {% for item in categories %}
+                            <a href="{% url 'playlists' item.url %}" style="width:30%;"
+                               class="text-decoration-none text-success">
+                                <div class="card shadow p-3 mb-5 bg-white rounded">
+                                    <img class="card-img-top img-fluid" src="{% static 'technology/spotify.png' %}">
+                                    <h3>{{ item.name }}</h3>
+                                </div>
+                            </a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            </div>
+        </center>
+    </section>
+{% endblock %}

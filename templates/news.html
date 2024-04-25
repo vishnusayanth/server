@@ -1,0 +1,140 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+    <section>
+        <center>
+            <div class="container">
+                <h2>News headlines</h2>
+                <p class="white">Click on news card to read full coverage.</p>
+                <br/>
+                <input type="text" placeholder="Enter a keyword to search" class="form-control col-md-5"
+                       id="search"/>
+                <br/>
+                <div class="spinner-border text-primary to-remove" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+                <small class="to-remove">Please wait while I scrape the latest news from google.......</small>
+
+            </div>
+            <div id="news_box" class="container">
+            </div>
+        </center>
+        <br/>
+    </section>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $.ajax({
+                type: "GET",
+                url: "{% url 'fetch_news' %}",
+                dataType: "json",
+                success: function (data) {
+                    $('.to-remove').remove();
+                    $.each(data.data, function (i, item) {
+                            item = $.parseJSON(item);
+                            let html_str = `
+                                <a href="{url}" target="_blank" style="text-decoration: none;" id="box-{id}" title="Click to read full story">
+                                    <div class="row shadow p-3 mb-5 bg-white rounded justify-content-around" style="width:80%;">
+{img}
+<br/>
+                                        <div class="alert alert-success news-text col-md-7" id="{id}">
+{content}
+                                        </div>
+                                    </div>
+                                </a>
+`;
+                            if (item.image === 'None') {
+                                item.image = ''
+                            }
+                            html_str = html_str.replace('{url}', item.url).replace('{content}', item.content).replace('{img}', item.image).replace('{id}', i).replace('{id}', i);
+                            $('#news_box').append(html_str);
+                        }
+                    );
+                },
+                error: function () {
+
+                }
+            });
+            $('#search').keyup(function () {
+                let text = $('#search').val().toLowerCase();
+                $('.news-text').each(function () {
+                    let i = 'box-' + $(this).attr('id');
+                    if (!$(this).html().toString().toLowerCase().includes(text)) {
+                        document.getElementById(i).style.display = 'none';
+                    } else {
+                        document.getElementById(i).style.display = 'block';
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

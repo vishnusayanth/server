@@ -1,0 +1,55 @@
+{% extends 'layout.html' %}
+{% block content %}
+    <div style="height: 100px;"></div>
+    <center>
+        <input type="text" class="form-control col-md-5" placeholder="Enter text to search" id="search_text" />
+        <br/>
+        <div class="card mb-4 shadow-lg rounded" style="width:80%;">
+            <div class="card-header">
+                <i class="fas fa-table mr-1"></i>
+                {% if not country %}
+                    No states added yet
+                {% else %}
+                    States in {{ country }}
+                {% endif %}
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Name</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for item in object_list %}
+                            <tr class="item" title="{% if item.capital_state%}CAPITAL{% endif %}">
+                                <td>{{ item.id }}</td>
+                                {% if user.is_superuser %}
+                                <td><a href="{% url 'admin:index' %}locations/state/{{item.id}}/change/">{{ item.name }}</a></td>
+                                {% else %}
+                                    <td>{{ item.name }}</td>
+                                {% endif %}
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </center>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('tr').each(function (index, tr) {
+                if (tr.title === 'CAPITAL') {
+                    tr.classList.add('table-success');
+                }
+            });
+        });
+    </script>
+
+
+{% endblock %}

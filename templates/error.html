@@ -1,0 +1,10 @@
+{% load static %}
+<div align="center">
+    <br/>
+    <br/>
+    <img class="mb-4 img-error img-fluid" src="{% static 'assets/img/error.png' %}" width="300"/>
+    <h1 title="{{ request.session.message }}">Something doesn't seem right. Please try again later.</h1>
+    <a href="{% url 'home' %}">
+        Return to Homepage
+    </a>
+</div>
