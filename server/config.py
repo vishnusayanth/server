@@ -12,7 +12,7 @@ if os.path.exists(dotenv_path):
 DEBUG_MODE = os.environ.get('DEBUG_MODE') == 'True'
 LOCAL_DB = os.environ.get('LOCAL_DB') == 'True'
 PRODUCTION = os.environ.get('PRODUCTION') == 'True'
-ALLOWED_HOST = 'vishnusayanth-django-vishnusayanth-django.koyeb.app'
+ALLOWED_HOST = 'django-vishnusayanth.koyeb.app'
 GITHUB_KEY = os.environ['GITHUB_KEY']
 GITHUB_SECRET = os.environ['GITHUB_SECRET']
 DJANGO_APP_KEY = os.environ['DJANGO_APP_KEY']
