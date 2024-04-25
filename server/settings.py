@@ -1,6 +1,5 @@
 import os
 from pathlib import Path
-from sshtunnel import SSHTunnelForwarder
 
 from server.config import GITHUB_SECRET, GITHUB_KEY, DB_HOST, DB_PASSWORD, DB_USER, \
     DB_NAME, DJANGO_APP_KEY, ALLOWED_HOST, DEBUG_MODE, PRODUCTION, BASE_DIR,DB_PORT, LOCAL_DB
