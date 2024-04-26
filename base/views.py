@@ -3,6 +3,8 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
 import traceback
+from django.contrib.staticfiles.utils import get_files
+from django.contrib.staticfiles.storage import StaticFilesStorage
 
 from base.models import Developer
 from locations.models import Country, Continent, State
@@ -101,6 +103,20 @@ def home(request):
         return render(request, 'home.html', data)
     except Exception as ex:
         logger.write_to_console(str(ex),traceback, 'Home page')
+        request.session['message'] = str(ex)
+        return redirect('error')
+
+
+def sketch(request):
+    try:
+        s = StaticFilesStorage()
+        data = list(get_files(s, location='sketches'))
+        print(data)
+        return JsonResponse({
+            'data':data
+        })
+    except Exception as ex:
+        logger.write_to_console(str(ex),traceback, 'Sketch')
         request.session['message'] = str(ex)
         return redirect('error')
 
