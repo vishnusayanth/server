@@ -6,7 +6,7 @@ import traceback
 from django.contrib.staticfiles.utils import get_files
 from django.contrib.staticfiles.storage import StaticFilesStorage
 from django.views.decorators.csrf import csrf_exempt
-
+import json
 from base.models import Developer
 from locations.models import Country, Continent, State
 from server.classes import DjangoAppLogger
@@ -162,9 +162,11 @@ def visit(request):
                 response = reader.city(ip_address)
                 latitude = response.location.latitude
                 longitude = response.location.longitude
-            maps_link = f"https://www.google.com/maps?q={latitude},{longitude}"
-            application = request.META.get('HTTP_ORIGIN')
-            print(maps_link,' -------------------------- ',application)
+            message_str = f"""
+There has been a new visit at {request.META.get('HTTP_ORIGIN')}.
+Visitor location is{" approximately" if coordinates_from_client is False else ""} https://www.google.com/maps?q={latitude},{longitude}
+            """
+            print(message_str)
             data = {
                 'data': True,
             }
