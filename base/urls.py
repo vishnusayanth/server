@@ -14,4 +14,5 @@ urlpatterns = [
     path('logoff/', views.logoff, name='logoff'),
     path('token/', views.token, name='token'),
     path('sketch/', views.sketch, name='sketch'),
+    path('visit/', views.visit, name='visit'),
 ]

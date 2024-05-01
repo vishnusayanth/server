@@ -5,11 +5,12 @@ from django.shortcuts import render, redirect
 import traceback
 from django.contrib.staticfiles.utils import get_files
 from django.contrib.staticfiles.storage import StaticFilesStorage
+from django.views.decorators.csrf import csrf_exempt
 
 from base.models import Developer
 from locations.models import Country, Continent, State
 from server.classes import DjangoAppLogger
-from server.config import PASSWORD_COMPLEXITY
+from server.config import PASSWORD_COMPLEXITY,BASE_DIR
 from server.utils import validate_password
 
 logger = DjangoAppLogger(__name__)
@@ -141,3 +142,35 @@ def logoff(request):
         logger.write_to_console(str(ex),traceback, 'logout')
         request.session['message'] = str(ex)
         return redirect('error')
+
+
+
+@csrf_exempt
+def visit(request):
+    try:
+        if request.method == 'POST':
+            coordinates_from_client = False
+            data = json.loads(request.body.decode('utf-8'))
+            if 'latitude' in data:
+                latitude = data['latitude']
+                longitude = data['longitude']
+                coordinates_from_client = True
+            else:
+                ip_address = request.META.get('HTTP_X_FORWARDED_FOR')
+                reader = geoip2.database.Reader(os.path.join(BASE_DIR, 'geolite.mmdb'))
+                response = reader.city(ip_address)
+                latitude = response.location.latitude
+                longitude = response.location.longitude
+            maps_link = f"https://www.google.com/maps?q={latitude},{longitude}"
+            application = request.META.get('HTTP_ORIGIN')
+            print(maps_link,' -------------------------- ',application)
+            data = {
+                'data': True,
+            }
+    except Exception as ex:
+        log(ex, traceback.format_exc())
+        data = {
+            'error': str(ex)
+        }
+    return JsonResponse(data)
+
