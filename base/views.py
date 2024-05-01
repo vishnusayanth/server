@@ -147,13 +147,14 @@ def logoff(request):
 
 @csrf_exempt
 def visit(request):
+    data = {}
     try:
         if request.method == 'POST':
             coordinates_from_client = False
-            data = json.loads(request.body.decode('utf-8'))
-            if 'latitude' in data:
-                latitude = data['latitude']
-                longitude = data['longitude']
+            req_data = json.loads(request.body.decode('utf-8'))
+            if 'latitude' in req_data:
+                latitude = req_data['latitude']
+                longitude = req_data['longitude']
                 coordinates_from_client = True
             else:
                 ip_address = request.META.get('HTTP_X_FORWARDED_FOR')
