@@ -111,7 +111,6 @@ def sketch(request):
     try:
         s = StaticFilesStorage()
         data = list(get_files(s, location='sketches'))
-        print(data)
         return JsonResponse({
             'data':data
         })
