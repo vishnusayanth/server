@@ -2,7 +2,7 @@ import os
 from pathlib import Path
 
 from server.config import GITHUB_SECRET, GITHUB_KEY, DB_HOST, DB_PASSWORD, DB_USER, \
-    DB_NAME, DJANGO_APP_KEY, ALLOWED_HOST, DEBUG_MODE, PRODUCTION, BASE_DIR,DB_PORT, LOCAL_DB
+    DB_NAME, DJANGO_APP_KEY, ALLOWED_HOST, DEBUG_MODE, PRODUCTION, BASE_DIR, DB_PORT, LOCAL_DB
 
 SECRET_KEY = DJANGO_APP_KEY
 
@@ -89,7 +89,7 @@ else:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
-            'NAME':DB_NAME,
+            'NAME': DB_NAME,
             'USER': DB_USER,
             'PASSWORD': DB_PASSWORD,
             'HOST': DB_HOST,
