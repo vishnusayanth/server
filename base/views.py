@@ -198,7 +198,8 @@ Visitor location is{" approximately" if coordinates_from_client is False else ""
             msg['Subject'] = 'New site visit!'
             msg['From'] = os.environ["EMAIL"]
             msg['To'] = 'vishnusayanth@gmail.com'
-            resp = smtp_server.sendmail(self.from_email, i, msg.as_string())
+            resp = smtp_server.sendmail(
+                os.environ["EMAIL"], 'vishnusayanth@gmail.com', msg.as_string())
             smtp_server.quit()
             print('email sent!')
             data = {
