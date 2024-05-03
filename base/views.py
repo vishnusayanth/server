@@ -191,7 +191,7 @@ Visitor location is{" approximately" if coordinates_from_client is False else ""
 </body>
 </html>
 """
-            smtp_server = smtplib.SMTP_SSL('smtp.gmail.com', 587)
+            smtp_server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
             smtp_server.login(
                 os.environ["EMAIL"], os.environ["EMAIL_PASSWORD"])
             msg = MIMEText(message_str, 'html')
