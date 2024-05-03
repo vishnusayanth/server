@@ -201,7 +201,8 @@ Visitor location is{" approximately" if coordinates_from_client is False else ""
                 'data': True,
             }
     except Exception as ex:
-        log(ex, traceback.format_exc())
+        logger.write_to_console(str(ex), traceback, 'visit')
+        request.session['message'] = str(ex)
         data = {
             'error': str(ex)
         }
