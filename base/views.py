@@ -3,10 +3,13 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
 import traceback
+import smtplib
+from email.mime.text import MIMEText
 from django.contrib.staticfiles.utils import get_files
 from django.contrib.staticfiles.storage import StaticFilesStorage
 from django.views.decorators.csrf import csrf_exempt
 import json
+import os
 from base.models import Developer
 from locations.models import Country, Continent, State
 from server.classes import DjangoAppLogger
