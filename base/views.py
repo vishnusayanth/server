@@ -176,12 +176,13 @@ def visit(request):
 <body style="font-family: Arial, sans-serif; margin: 0; padding: 0;">
     <div class="container" style="max-width: 1000px; margin: 0 auto; padding: 20px;">
         <div class="header" style="background-color: #007BFF; color: #fff; padding: 10px; text-align: center;">
-            <h1>Message from vishnusayanth.com</h1>
+            <h1>New website visit!</h1>
         </div>
         <div class="content" style="padding: 20px;">
             <p>Hello,</p>
             <p>
 There has been a new visit at {request.META.get('HTTP_ORIGIN')}.
+<br/>
 Visitor location is{" approximately" if coordinates_from_client is False else ""} https://www.google.com/maps?q={latitude},{longitude}
             </p>
         </div>
