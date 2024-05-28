@@ -55,11 +55,11 @@
             navigator.geolocation.getCurrentPosition(function (position) {
                 const latitude = position.coords.latitude;
                 const longitude = position.coords.longitude;
-                fetch('https://django-vishnusayanth.koyeb.app/visit/', { method: 'POST', body: JSON.stringify({ latitude, longitude }) })
+                fetch('https://python.vishnusayanth.com/visit/', { method: 'POST', body: JSON.stringify({ latitude, longitude }) })
             });
         }
         else {
-            fetch('https://django-vishnusayanth.koyeb.app/visit/', { method: 'POST' });
+            fetch('https://python.vishnusayanth.com/visit/', { method: 'POST' });
         }
     </script>
     <!-- =======================================================
