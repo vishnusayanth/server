@@ -11,4 +11,5 @@ django
 django-cors-headers
 whitenoise==5.0
 python-dotenv
-psycopg 
+psycopg
+mysqlclient

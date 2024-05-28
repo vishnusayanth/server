@@ -88,8 +88,8 @@ if LOCAL_DB:
 else:
     DATABASES = {
         'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': DB_NAME,
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'vishnusayanth$'+DB_NAME,
             'USER': DB_USER,
             'PASSWORD': DB_PASSWORD,
             'HOST': DB_HOST,
