@@ -51,15 +51,29 @@
         if (!cookieExists) {
             setSiteVisitCookie();
         }
-        if ("geolocation" in navigator) {
-            navigator.geolocation.getCurrentPosition(function (position) {
-                const latitude = position.coords.latitude;
-                const longitude = position.coords.longitude;
-                fetch('https://python.vishnusayanth.com/visit/', { method: 'POST', body: JSON.stringify({ latitude, longitude }) })
-            });
-        }
-        else {
-            fetch('https://python.vishnusayanth.com/visit/', { method: 'POST' });
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                function (position) {
+                    const latitude = position.coords.latitude;
+                    const longitude = position.coords.longitude;
+                    fetch('https://server.elvesonthecloud.com/api/admin/visit/', {
+                        method: 'POST',
+                        body: JSON.stringify({ latitude, longitude }),
+                        headers: { 'Content-Type': 'application/json' }
+                    });
+                },
+                function (error) {
+                    if (error.code === error.PERMISSION_DENIED) {
+                        fetch('https://server.elvesonthecloud.com/api/admin/visit/', {
+                            method: 'POST',
+                            body: JSON.stringify({}),
+                            headers: {
+                                'Content-Type': 'application/json'
+                            }
+                        });
+                    }
+                }
+            );
         }
     </script>
     <!-- =======================================================
